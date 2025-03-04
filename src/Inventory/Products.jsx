@@ -290,7 +290,7 @@ const ProductInventory = () => {
                     <option value="all">All Levels</option>
                     <option value="low">Low Stock (≤ 5)</option>
                     <option value="medium">Medium Stock (6-20)</option>
-                    <option value="high">High Stock (>20)</option>
+                    <option value="high">High Stock (&gt;20)</option>
                   </select>
                 </div>
                 
