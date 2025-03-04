@@ -1,3 +1,5 @@
+import React from 'react';
+
 const InventoryTable = ({ data, columns, onEdit, onDelete }) => {
   return (
     <div className="overflow-x-auto border rounded shadow-sm">

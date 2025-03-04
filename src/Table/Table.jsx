@@ -1,4 +1,5 @@
 // src/pages/TableManagementPage.jsx
+import React from 'react';
 import TableList from './TableList';
 import CreateTableForm from './CreateTableForm';
 import ReservationList from './ReservationList';

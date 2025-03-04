@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getCategories, createCategory } from "../Services/api";
 import { PlusCircle, Loader2, Search } from "lucide-react";
 
