@@ -14,6 +14,7 @@ import Inventory from "./Inventory/Inventory";
 import OrderManager from './Orders/OrderManager';
 import OrderDetails from './Orders/OrderDetails';
 import SalesReport from './Orders/SalesReport';
+import { TableProvider } from "./context/TableContext";
 import Table from "./Table/Table";
 
 const App = () => {
@@ -42,7 +43,9 @@ const App = () => {
           <Route path="/orders/:id" element={<OrderDetails />} />
           <Route path="/products" element={<Products />} />
           <Route path="/sales-reports" element={<SalesReport />} />
-          <Route path="/table" element={<Table />} />
+          <TableProvider>
+            <Route path="/table" element={<Table />} />
+          </TableProvider>
         </Routes>
       </AuthProvider>
     </Router>

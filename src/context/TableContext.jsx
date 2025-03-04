@@ -1,38 +1,9 @@
-// src/context/TableContext.js
-// import { createContext, useState, useEffect } from 'react';
-// import { fetchTables } from '../Table/TableAPI';
-
-// export const TableContext = createContext();
-
-// const TableProvider = ({ children, token }) => {
-//     const [tables, setTables] = useState([]);
-    
-//     useEffect(() => {
-//         const getTables = async () => {
-//             const data = await fetchTables(token);
-//             setTables(data);
-//         };
-//         getTables();
-//     }, [token]);
-    
-//     return (
-//         <TableContext.Provider value={{ tables, setTables }}>
-//             {children}
-//         </TableContext.Provider>
-//     );
-// };
-
-// export default TableProvider;
-
-
-
-
 import { createContext, useState, useEffect } from "react";
 import { fetchTables } from "../Table/TableAPI";  // Ensure correct path!
 
 export const TableContext = createContext();
 
-const TableProvider = ({ children }) => {
+export const TableProvider = ({ children }) => {  // Use named export
     const [tables, setTables] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -74,5 +45,3 @@ const TableProvider = ({ children }) => {
         </TableContext.Provider>
     );
 };
-
-export default TableProvider;
