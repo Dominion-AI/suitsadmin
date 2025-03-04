@@ -43,9 +43,7 @@ const App = () => {
           <Route path="/orders/:id" element={<OrderDetails />} />
           <Route path="/products" element={<Products />} />
           <Route path="/sales-reports" element={<SalesReport />} />
-          <TableProvider>
-            <Route path="/table" element={<Table />} />
-          </TableProvider>
+          <Route path="/table" element={<Table />} />
         </Routes>
       </AuthProvider>
     </Router>

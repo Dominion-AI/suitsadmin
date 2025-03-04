@@ -1,7 +1,4 @@
 // src/pages/TableManagementPage.jsx
-import { useContext } from 'react';
-import { TableContext } from '../context/TableContext';
-import { ReservationContext } from '../context/ReservationContext';
 import TableList from './TableList';
 import CreateTableForm from './CreateTableForm';
 import ReservationList from './ReservationList';
