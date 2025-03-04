@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { fetchTables } from "../Table/TableAPI";  // Ensure correct path!
 
 export const TableContext = createContext();

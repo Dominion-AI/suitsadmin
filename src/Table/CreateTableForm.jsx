@@ -1,5 +1,5 @@
 // src/components/TableManagement/CreateTableForm.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createTable } from './TableAPI';
 
 const CreateTableForm = ({ onTableCreated }) => {

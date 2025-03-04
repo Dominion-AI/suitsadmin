@@ -1,5 +1,5 @@
 // src/components/TableManagement/ReservationList.jsx
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchReservations } from './TableAPI';
 
 const ReservationList = () => {

@@ -1,5 +1,5 @@
 // StockMovement.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import inventoryAPI from '../Services/api';
 import InventoryForm from './InventoryForm';
 

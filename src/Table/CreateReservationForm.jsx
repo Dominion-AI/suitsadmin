@@ -1,5 +1,5 @@
 // src/components/TableManagement/CreateReservationForm.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createReservation } from './TableAPI';
 
 const CreateReservationForm = ({ onReservationCreated }) => {

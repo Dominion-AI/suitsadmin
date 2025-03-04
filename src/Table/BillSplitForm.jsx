@@ -1,4 +1,5 @@
 // src/components/TableManagement/BillSplitForm.jsx
+import React from 'react';
 import { useState } from 'react';
 import { splitBill } from './TableAPI';
 

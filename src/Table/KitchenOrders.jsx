@@ -1,5 +1,5 @@
 // src/components/TableManagement/KitchenOrders.jsx
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchKitchenOrders } from './TableAPI';
 
 const KitchenOrders = () => {

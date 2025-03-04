@@ -1,4 +1,5 @@
 // src/components/TableManagement/BarOrders.jsx
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { fetchBarOrders } from './TableAPI';
 

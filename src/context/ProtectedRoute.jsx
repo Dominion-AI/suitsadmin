@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import api from "../Services/api";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../Services/constant";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 const ProtectedRoute = ({ children }) => {
