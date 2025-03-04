@@ -83,7 +83,7 @@ const Login = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md mb-6">
         <h1 className="text-4xl font-extrabold text-center text-indigo-800 tracking-tight">
-          SuitsAdmin
+          SuitsAdminNew
         </h1>
         <p className="mt-2 text-center text-xl text-gray-600">Management Platform</p>
       </div>
