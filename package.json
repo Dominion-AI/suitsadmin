@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "proxy": "https://suitsadmin.onrender.com",
+  "homepage": "https://dominion-ai.github.io/suitsadmin",
+
 
   "scripts": {
     "dev": "vite",
