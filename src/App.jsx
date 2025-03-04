@@ -1,10 +1,10 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./Context/AuthContext";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
-import UserList from "./Components/UserList"
-import Dashboard from "./Components/Dashboard";
-import ProtectedRoute from "./Context/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import UserList from "./components/UserList"
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./context/ProtectedRoute";
 import Categories from "./Inventory/Categories";
 import Products from "./Inventory/Products";
 import ProductDetails from "./Inventory/ProductDetails";
