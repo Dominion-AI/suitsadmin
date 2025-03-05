@@ -12,10 +12,10 @@ import ProductDetails from "./Inventory/ProductDetails";
 import StockMovement from "./Inventory/StockMovement";
 import LowStockAlert from "./Inventory/LowStockAlert";
 import Inventory from "./Inventory/Inventory";
-import OrderManager from './Orders/OrderManager';
-import OrderDetails from './Orders/OrderDetails';
-import SalesReport from './Orders/SalesReport';
-import Table from "./Table/Table";
+import SaleManager from './Sales/SaleManager';
+
+// import SalesReport from './Orders/SalesReport';
+// import Table from "./Table/Table";
 
 const App = () => {
   return (
@@ -39,11 +39,11 @@ const App = () => {
           <Route path="/stock-movement" element={<StockMovement />} />
           <Route path="/low-stock-alerts" element={<LowStockAlert />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/orders" element={<OrderManager />} />
-          <Route path="/orders/:id" element={<OrderDetails />} />
+          <Route path="/sales" element={<SaleManager />} />
+          {/* <Route path="/sales/:id" element={<SaleDetails />} /> */}
           <Route path="/products" element={<Products />} />
-          <Route path="/sales-reports" element={<SalesReport />} />
-          <Route path="/table" element={<Table />} />
+          {/* <Route path="/sales-reports" element={<SalesReport />} /> */}
+          {/* <Route path="/table" element={<Table />} /> */}
         </Routes>
       </AuthProvider>
     </Router>

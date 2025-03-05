@@ -107,40 +107,35 @@ export const deleteProduct = async (id) => {
   return response.data;
 };
 
-// Order API functions
+// Sale API functions
+export const createSale = async (saleData) => {
+  const response = await api.post('/sale/sales/', saleData);
+  return response.data;
+};
 
-export const createOrder = async (orderData) => {
+export const getSales = async () => {
+  const response = await api.get('/sale/sales/');
+  return response.data;
+};
+
+export const getSaleById = async (id) => {
+  const response = await api.get(`sale/sales/${id}/`);
+  return response.data;
+};
+
+export const updateSaleStatus = async (saleId, status) => {
   try {
-    const response = await api.post('/orders/orders/', orderData);
+    const response = await api.patch(`/sale/sales/${saleId}/`, { status });
     return response.data;
   } catch (error) {
-    console.error("Error creating order:", error);
+    console.error("Failed to update sale status:", error);
     throw error;
   }
 };
 
-
-export const getOrders = async () => {
-  const response = await api.get('/orders/orders/');
-  return response.data;
-};
-
-export const getOrderById = async (id) => {
-  const response = await api.get(`/orders/orders/${id}/`);
-  return response.data;
-};
-
-export const updateOrderStatus = async (id, status) => {
-  const response = await api.patch(`/orders/orders/${id}/`, { status });
-  return response.data;
-};
-
-
-export const generateInvoice = async (orderId) => {
+export const generateInvoice = async (saleId) => {
   try {
-    const response = await api.get(`/transactions/orders/${orderId}/invoice/`, {
-      responseType: 'blob',
-    });
+    const response = await api.get(`/sale/sales/${saleId}/invoice/`);
     return response.data;
   } catch (error) {
     console.error('Failed to generate invoice:', error);
@@ -153,49 +148,32 @@ export const generateInvoice = async (orderId) => {
 // export const createTable = (tableData) => fetchData("/table/tables/", "POST", tableData);
 
 
-// Sales API functions
-// Sales API functions
+
+// Exchange Rate API
+export const fetchExchangeRates = async () => {
+  const response = await api.post('/fetch-exchange-rates/');
+  return response.data;
+};
+
+// Sales Reports API
 export const getSalesReports = async () => {
-  const response = await api.get('/orders/sales-reports/');
+  const response = await api.get('sale/sales-report/');
   return response.data;
-};
-
-export const generateSalesReport = async () => {
-  const response = await api.get('/orders/sales-reports/generate/');
-  return response.data;
-};
-
-export const downloadSalesReport = async () => {
-  const response = await api.get('/orders/sales-reports/download/', { responseType: 'blob' });
-  const url = window.URL.createObjectURL(new Blob([response.data]));
-  const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', 'sales_report.pdf');
-  document.body.appendChild(link);
-  link.click();
 };
 
 export const createStockMovement = async (movementData) => {
-  const response = await fetch("/inventory/stock-movement/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(movementData),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to create stock movement");
+  try {
+    const response = await api.post("/inventory/stock-movement/", movementData);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to create stock movement:", error);
+    throw error;
   }
-
-  return response.json();
 };
 
 
-
 export const getUsers = async () => {
-  const response = await api.get("/users//users");
+  const response = await api.get("/users/users");
   return response.data;
 };
 

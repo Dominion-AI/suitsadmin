@@ -105,7 +105,7 @@ const Dashboard = () => {
       title: "Sales Processing",
       description: "View and process customer sales and transactions",
       icon: <ShoppingCart className="h-6 w-6 text-white" />,
-      path: "/orders",
+      path: "/sales",
       color: "from-sky-700 to-sky-600"
     },
     {
