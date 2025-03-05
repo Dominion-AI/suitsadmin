@@ -12,34 +12,33 @@ const StockMovement = ({ productId, onStockUpdated }) => {
       onStockUpdated();
       setQuantity("");
     } catch (error) {
-      console.error("Stock movement failed:", error.response?.data || error);
+      console.error("Movimiento de stock fallido:", error.response?.data || error);
     }
   };
 
   return (
     <div className="flex items-center gap-2">
       <select value={movementType} onChange={(e) => setMovementType(e.target.value)}>
-        <option value="add">Add Stock</option>
-        <option value="remove">Remove Stock</option>
+        <option value="add">Agregar Stock</option>
+        <option value="remove">Eliminar Stock</option>
       </select>
       <input
         type="number"
         value={quantity}
         onChange={(e) => setQuantity(e.target.value)}
-        placeholder="Quantity"
+        placeholder="Cantidad"
         className="p-2 border rounded"
       />
       <button onClick={handleStockMovement} className="bg-blue-500 text-white px-4 py-2 rounded">
-        Update Stock
+        Actualizar Stock
       </button>
     </div>
   );
 };
 
 StockMovement.propTypes = {
-  productId: PropTypes.number.isRequired, // Changed from PropTypes.func to PropTypes.number
+  productId: PropTypes.number.isRequired,
   onStockUpdated: PropTypes.func.isRequired
 };
-
 
 export default StockMovement;

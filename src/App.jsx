@@ -15,7 +15,6 @@ import Inventory from "./Inventory/Inventory";
 import OrderManager from './Orders/OrderManager';
 import OrderDetails from './Orders/OrderDetails';
 import SalesReport from './Orders/SalesReport';
-import { TableProvider } from "./context/TableContext";
 import Table from "./Table/Table";
 
 const App = () => {

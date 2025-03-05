@@ -169,9 +169,9 @@ const ProductInventory = () => {
         <header className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-3xl font-bold text-indigo-800 flex items-center gap-2">
-              <Package className="h-8 w-8" /> Product Inventory
+              <Package className="h-8 w-8" /> Inventario de Productos
             </h2>
-            <p className="text-gray-600 mt-1">Manage and organize your product catalog</p>
+            <p className="text-gray-600 mt-1">Administra y organiza tu catálogo de productos</p>
           </div>
           <div className="mt-4 md:mt-0">
             <button 
@@ -184,14 +184,14 @@ const ProductInventory = () => {
             >
               {isAddingProduct ? (
                 <>
-                  <XCircle className="h-4 w-4" /> Cancel
+                  <XCircle className="h-4 w-4" /> Cancelar
                 </>
               ) : (
                 <>
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
-                  Add Product
+                  Agregar Producto
                 </>
               )}
             </button>
@@ -200,7 +200,7 @@ const ProductInventory = () => {
 
         {isAddingProduct && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-8 border-l-4 border-indigo-500 animate-fadeIn">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Add New Product</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Agregar Nuevo Producto</h3>
             <ProductDetails onProductAdded={handleProductAdded} />
           </div>
         )}
@@ -209,9 +209,9 @@ const ProductInventory = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
             <h3 className="text-xl font-semibold text-gray-800 mb-4 md:mb-0 flex items-center gap-2">
               <Package className="h-5 w-5 text-indigo-600" /> 
-              Product List
+              Lista de Productos
               <span className="ml-2 px-2 py-1 text-xs rounded-full bg-indigo-100 text-indigo-800">
-                {filteredProducts.length} items
+                {filteredProducts.length} artículos
               </span>
             </h3>
             
@@ -260,7 +260,7 @@ const ProductInventory = () => {
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="w-full md:w-1/4">
                   <label htmlFor="category-filter" className="block text-sm font-medium text-gray-700 mb-1">
-                    Category
+                  Categoría
                   </label>
                   <select
                     id="category-filter"
@@ -268,7 +268,7 @@ const ProductInventory = () => {
                     onChange={(e) => setSelectedCategory(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-300 focus:outline-none"
                   >
-                    <option value="all">All Categories</option>
+                    <option value="all">Todas las categorías</option>
                     {categories.map(category => (
                       <option key={category} value={category}>
                         {category}
@@ -279,7 +279,7 @@ const ProductInventory = () => {
                 
                 <div className="w-full md:w-1/4">
                   <label htmlFor="stock-filter" className="block text-sm font-medium text-gray-700 mb-1">
-                    Stock Level
+                  Nivel de stock
                   </label>
                   <select
                     id="stock-filter"
@@ -287,16 +287,16 @@ const ProductInventory = () => {
                     onChange={(e) => setStockFilter(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-300 focus:outline-none"
                   >
-                    <option value="all">All Levels</option>
-                    <option value="low">Low Stock (≤ 5)</option>
-                    <option value="medium">Medium Stock (6-20)</option>
-                    <option value="high">High Stock (&gt;20)</option>
+                    <option value="all">Todos los niveles</option>
+                    <option value="low">Stock Bajo (≤ 5)</option>
+                    <option value="medium">Stock Medio (6-20)</option>
+                    <option value="high">Stock Alto (&gt;20)</option>
                   </select>
                 </div>
                 
                 <div className="w-full md:w-1/4">
                   <label htmlFor="sort-by" className="block text-sm font-medium text-gray-700 mb-1">
-                    Sort By
+                  Ordenar Por
                   </label>
                   <select
                     id="sort-by"
@@ -304,16 +304,16 @@ const ProductInventory = () => {
                     onChange={(e) => handleSort(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-300 focus:outline-none"
                   >
-                    <option value="name">Name</option>
-                    <option value="category_name">Category</option>
-                    <option value="price">Price</option>
-                    <option value="quantity_in_stock">Stock Level</option>
+                    <option value="name">Nombre</option>
+                    <option value="category_name">Categoría</option>
+                    <option value="price">Precio</option>
+                    <option value="quantity_in_stock">Nivel de Stock</option>
                   </select>
                 </div>
                 
                 <div className="w-full md:w-1/4">
                   <label htmlFor="sort-order" className="block text-sm font-medium text-gray-700 mb-1">
-                    Sort Order
+                  Ordenar Por
                   </label>
                   <select
                     id="sort-order"
@@ -321,8 +321,8 @@ const ProductInventory = () => {
                     onChange={(e) => setSortOrder(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-300 focus:outline-none"
                   >
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
                   </select>
                 </div>
               </div>
@@ -332,7 +332,7 @@ const ProductInventory = () => {
                   onClick={resetFilters}
                   className="px-3 py-1 text-sm text-gray-600 hover:text-gray-800 transition-colors"
                 >
-                  Reset Filters
+                  Restablecer Filtros
                 </button>
               </div>
             </div>
@@ -342,19 +342,19 @@ const ProductInventory = () => {
             <div className="flex justify-center items-center h-64">
               <div className="flex flex-col items-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mb-4"></div>
-                <p className="text-gray-500">Loading products...</p>
+                <p className="text-gray-500">Cargando productos...</p>
               </div>
             </div>
           ) : filteredProducts.length === 0 ? (
             <div className="text-center py-16 bg-gray-50 rounded-lg border border-dashed border-gray-300">
               <Package className="h-16 w-16 mx-auto text-gray-400 mb-4" />
-              <h4 className="text-xl font-medium text-gray-700 mb-2">No products found</h4>
-              <p className="text-gray-500 mb-6 max-w-md mx-auto">We couldn't find any products that match your current filters or search criteria.</p>
+              <h4 className="text-xl font-medium text-gray-700 mb-2">No se encontraron productos</h4>
+              <p className="text-gray-500 mb-6 max-w-md mx-auto">No pudimos encontrar ningún producto que coincida con tus filtros o criterios de búsqueda actuales</p>
               <button 
                 onClick={resetFilters}
                 className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors shadow-sm"
               >
-                Clear All Filters
+                Borrar Todos los Filtros
               </button>
             </div>
           ) : (
@@ -364,7 +364,7 @@ const ProductInventory = () => {
                   <tr>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors" onClick={() => handleSort("name")}>
                       <div className="flex items-center">
-                        Product Name
+                      Nombre del Producto
                         {sortBy === "name" && (
                           <span className="ml-1 text-indigo-600">
                             {sortOrder === "asc" ? "↑" : "↓"}
@@ -403,7 +403,7 @@ const ProductInventory = () => {
                       </div>
                     </th>
                     <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
+                    Acciones
                     </th>
                   </tr>
                 </thead>
@@ -484,21 +484,21 @@ const ProductInventory = () => {
                                 <h4 className="text-sm font-semibold text-gray-700 mb-2">Product Details</h4>
                                 <p className="text-sm text-gray-600 mb-1"><span className="font-medium">ID:</span> {product.id}</p>
                                 <p className="text-sm text-gray-600 mb-1"><span className="font-medium">SKU:</span> {product.sku || 'N/A'}</p>
-                                <p className="text-sm text-gray-600 mb-1"><span className="font-medium">Created:</span> {new Date().toLocaleDateString()}</p>
-                                <p className="text-sm text-gray-600"><span className="font-medium">Last Updated:</span> {new Date().toLocaleDateString()}</p>
+                                <p className="text-sm text-gray-600 mb-1"><span className="font-medium">Creado:</span> {new Date().toLocaleDateString()}</p>
+                                <p className="text-sm text-gray-600"><span className="font-medium">Última actualización:</span> {new Date().toLocaleDateString()}</p>
                               </div>
                               
                               <div className="bg-white p-4 rounded-lg shadow-sm">
-                                <h4 className="text-sm font-semibold text-gray-700 mb-2">Description</h4>
+                                <h4 className="text-sm font-semibold text-gray-700 mb-2">Descripción</h4>
                                 <p className="text-sm text-gray-600">{product.description || 'No description available.'}</p>
                               </div>
                               
                               <div className="bg-white p-4 rounded-lg shadow-sm">
-                                <h4 className="text-sm font-semibold text-gray-700 mb-2">Inventory</h4>
+                                <h4 className="text-sm font-semibold text-gray-700 mb-2">Inventario</h4>
                                 <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm text-gray-600">Current Stock:</span>
+                                  <span className="text-sm text-gray-600">Stock Actual:</span>
                                   <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStockLevelClass(product.quantity_in_stock)}`}>
-                                    {product.quantity_in_stock} units
+                                    {product.quantity_in_stock} unidades
                                   </span>
                                 </div>
                                 <div className="mt-3">
@@ -527,13 +527,13 @@ const ProductInventory = () => {
           
           <div className="mt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
             <div>
-              Showing {filteredProducts.length} of {products.length} products
+            Mostrando {filteredProducts.length} de {products.length} productos
             </div>
             <div className="mt-2 md:mt-0">
               {stockFilter === "low" && filteredProducts.some(p => p.quantity_in_stock <= 5) && (
                 <div className="flex items-center text-red-700 bg-red-50 px-3 py-1 rounded">
                   <AlertCircle className="h-4 w-4 mr-1" />
-                  <span>{filteredProducts.filter(p => p.quantity_in_stock <= 5).length} products with low stock</span>
+                  <span>{filteredProducts.filter(p => p.quantity_in_stock <= 5).length} productos con bajo stock</span>
                 </div>
               )}
             </div>

@@ -4,7 +4,7 @@ import { getUsers } from "../Services/api";
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // ✅ Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -13,12 +13,12 @@ const UserList = () => {
         const response = await getUsers();
         setUsers(response.data);
       } catch (error) {
-        console.error("Failed to fetch users:", error);
+        console.error("Error al obtener usuarios:", error);
         setError(
           error.response?.data?.detail ||
           (error.response?.status === 403
-            ? "Unauthorized! Admin access required."
-            : "Failed to fetch users. Please try again.")
+            ? "¡No autorizado! Se requiere acceso de administrador."
+            : "No se pudieron obtener los usuarios. Por favor, inténtalo de nuevo.")
         );
       } finally {
         setLoading(false);
@@ -29,27 +29,24 @@ const UserList = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">User List</h2>
+      <h2 className="text-2xl font-bold mb-4">Lista de Usuarios</h2>
 
-      {/* ✅ Loading State */}
-      {loading && <p className="text-gray-600">Loading users...</p>}
+      {loading && <p className="text-gray-600">Cargando usuarios...</p>}
 
-      {/* ✅ Error Message */}
       {error && (
         <div className="mb-4 p-4 bg-red-100 text-red-700 rounded">
           {error}
         </div>
       )}
 
-      {/* ✅ User Table */}
       {!loading && !error && (
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200">
               <th className="text-left p-2">ID</th>
-              <th className="text-left p-2">Username</th>
-              <th className="text-left p-2">Email</th>
-              <th className="text-left p-2">Role</th>
+              <th className="text-left p-2">Nombre de Usuario</th>
+              <th className="text-left p-2">Correo Electrónico</th>
+              <th className="text-left p-2">Rol</th>
             </tr>
           </thead>
           <tbody>
