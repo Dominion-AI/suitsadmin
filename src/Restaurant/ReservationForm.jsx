@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { reservationAPI } from "../api/reservation";
+import { reservationAPI } from "../Services/api";
 
 function ReservationForm() {
   const [formData, setFormData] = useState({

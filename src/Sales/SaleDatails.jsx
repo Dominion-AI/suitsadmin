@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-=======
+
 import React from "react";
->>>>>>> 5df3d5c (Trying method)
 import { useState } from "react";
 import PropTypes from 'prop-types';
 import { 
