@@ -171,6 +171,93 @@ export const createStockMovement = async (movementData) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+// RESTAURANT FUNCTIONS.
+export const tableAPI = {
+  fetchTables: async () => {
+    const response = await api.get('/table/tables/');
+    return response.data;
+  },
+  createTable: async (tableData) => {
+    const response = await api.post('/table/tables/', tableData);
+    return response.data;
+  },
+  updateTable: async (id, updatedData) => {
+    const response = await api.patch(`/table/tables/${id}/`, updatedData);
+    return response.data;
+  },
+  resetTable: async (id) => {
+    const response = await api.post(`/table/tables/${id}/reset/`);
+    return response.data;
+  },
+};
+
+export const reservationAPI = {
+  fetchReservations: async () => {
+    const response = await api.get('/table/reservations/');
+    return response.data;
+  },
+  createReservation: async (reservationData) => {
+    const response = await api.post('/table/reservations/', reservationData);
+    return response.data;
+  },
+  updateReservation: async (id, updatedData) => {
+    const response = await api.patch(`/table/reservations/${id}/`, updatedData);
+    return response.data;
+  },
+  deleteReservation: async (id) => {
+    const response = await api.delete(`/table/reservations/${id}/`);
+    return response.data;
+  },
+};
+
+export const saleAPI = {
+  createSale: async (saleData) => {
+    const response = await api.post('/sale/sales/', saleData);
+    return response.data;
+  },
+  fetchSales: async () => {
+    const response = await api.get('/sale/sales/');
+    return response.data;
+  },
+  fetchSaleById: async (id) => {
+    const response = await api.get(`/sale/sales/${id}/`);
+    return response.data;
+  },
+  updateSaleStatus: async (id, status) => {
+    const response = await api.patch(`/sale/sales/${id}/`, { status });
+    return response.data;
+  },
+  splitBill: async (saleId, splitData) => {
+    const response = await api.post(`/sale/${saleId}/split-bill/`, splitData);
+    return response.data;
+  },
+};
+
+export const orderAPI = {
+  fetchKitchenOrders: async () => {
+    const response = await api.get('/table/kitchen-orders/');
+    return response.data;
+  },
+  fetchBarOrders: async () => {
+    const response = await api.get('/table/bar-orders/');
+    return response.data;
+  },
+};
+
+export const invoiceAPI = {
+  generateInvoice: async (tableId) => {
+    const response = await api.get(`/table/tables/${tableId}/generate-invoice/`);
+    return response.data;
+  },
+  fetchInvoiceById: async (invoiceId) => {
+    const response = await api.get(`/table/invoices/${invoiceId}/`);
+    return response.data;
+  },
+};
+// END OF RESTAURANT FUNCTIONS
+>>>>>>> 5df3d5c (Trying method)
 
 export const getUsers = async () => {
   const response = await api.get("/users/users");

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import React from "react";
+>>>>>>> 5df3d5c (Trying method)
 import { useState, useEffect } from 'react';
 import { 
   Package, 

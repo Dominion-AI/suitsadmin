@@ -1,4 +1,8 @@
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
+=======
+import React from "react";
+>>>>>>> 5df3d5c (Trying method)
 import { 
   Eye, 
   FileText, 

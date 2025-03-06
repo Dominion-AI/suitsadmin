@@ -13,6 +13,10 @@ import StockMovement from "./Inventory/StockMovement";
 import LowStockAlert from "./Inventory/LowStockAlert";
 import Inventory from "./Inventory/Inventory";
 import SaleManager from './Sales/SaleManager';
+<<<<<<< HEAD
+=======
+import Restaurant from './Restaurant/Restaurant';
+>>>>>>> 5df3d5c (Trying method)
 
 // import SalesReport from './Orders/SalesReport';
 // import Table from "./Table/Table";
@@ -40,6 +44,11 @@ const App = () => {
           <Route path="/low-stock-alerts" element={<LowStockAlert />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/sales" element={<SaleManager />} />
+<<<<<<< HEAD
+=======
+          <Route path="/Restaurant" element={<Restaurant />} />
+
+>>>>>>> 5df3d5c (Trying method)
           {/* <Route path="/sales/:id" element={<SaleDetails />} /> */}
           <Route path="/products" element={<Products />} />
           {/* <Route path="/sales-reports" element={<SalesReport />} /> */}
