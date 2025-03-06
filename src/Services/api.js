@@ -171,8 +171,6 @@ export const createStockMovement = async (movementData) => {
   }
 };
 
-<<<<<<< HEAD
-=======
 // RESTAURANT FUNCTIONS.
 export const tableAPI = {
   fetchTables: async () => {
@@ -257,7 +255,6 @@ export const invoiceAPI = {
   },
 };
 // END OF RESTAURANT FUNCTIONS
->>>>>>> 5df3d5c (Trying method)
 
 export const getUsers = async () => {
   const response = await api.get("/users/users");

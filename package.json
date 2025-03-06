@@ -4,14 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "proxy": "https://suitsadmin.onrender.com",
-<<<<<<< HEAD
-<<<<<<< HEAD
   "homepage": "https://dominion-ai.github.io/suitsadmin",
-=======
->>>>>>> 07c488b (Migrating code to new repository)
-=======
-  "homepage": "https://dominion-ai.github.io/suitsadmin",
->>>>>>> 5df3d5c (Trying method)
+
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -19,19 +13,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "@tailwindcss/vite": "^4.0.9",
-=======
-    "@mui/material": "^6.4.6",
-    "@shadcn/ui": "^0.0.4",
-    "@tailwindcss/vite": "^4.0.8",
->>>>>>> 07c488b (Migrating code to new repository)
-=======
     "@mui/material": "^6.4.6",
     "@shadcn/ui": "^0.0.4",
     "@tailwindcss/vite": "^4.0.9",
->>>>>>> 5df3d5c (Trying method)
     "axios": "^1.7.9",
     "chart.js": "^4.4.8",
     "file-saver": "^2.0.5",
