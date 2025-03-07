@@ -274,7 +274,7 @@ export const invoiceAPI = {
     return response.data;
   },
 };
-// END OF RESTAURANT FUNCTIONS
+
 export const handleCompleteOrder = async (id, fetchOrders) => {
   try {
     await orderAPI.completeOrder(id);
@@ -303,6 +303,13 @@ export const handleGenerateInvoice = async (tableId, setInvoice, setError) => {
     setError(err.response?.data?.error || "Failed to generate invoice.");
   }
 };
+
+
+// END OF RESTAURANT FUNCTIONS
+
+
+
+// 🟡 Generate an invoice
 
 
 // END OF RESTAURANT FUNCTIONS

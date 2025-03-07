@@ -1,31 +1,66 @@
 import React, { useEffect, useState } from "react";
 import { getCategories, getProducts, createSale } from "../Services/api";
 import { tableAPI } from "../Services/api";
+import { fetchKitchenOrders, fetchBarOrders } from "../Services/api";
 import { handleCompleteOrder, handleCancelOrder } from "../Services/api";
 import { ShoppingCart, Plus, Minus, X, Check, AlertCircle, Coffee, Utensils } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function OrderList() {
+  // States for new order creation
   const [products, setProducts] = useState([]);
   const [tables, setTables] = useState([]);
   const [categories, setCategories] = useState({ kitchen: null, bar: null });
   const [orders, setOrders] = useState([]);
   const [newOrder, setNewOrder] = useState({ product: "", quantity: 1, tableNumber: "", customerName: "" });
+  
+  // States for order listing
+  const [kitchenOrders, setKitchenOrders] = useState([]);
+  const [barOrders, setBarOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [filterProductType, setFilterProductType] = useState("all");
+  
+  // UI states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [activeTab, setActiveTab] = useState("all");
 
-  // Fetch categories, products, and tables
+  // Fetch all necessary data
   useEffect(() => {
-    fetchProducts();
-    fetchTables();
+    fetchData();
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
       setError("");
 
+      // Fetch categories and products
+      await fetchProducts();
+      
+      // Fetch tables
+      await fetchTables();
+      
+      // Fetch existing orders
+      const kitchen = await fetchKitchenOrders();
+      const bar = await fetchBarOrders();
+      setKitchenOrders(kitchen);
+      setBarOrders(bar);
+      setFilteredOrders([...kitchen, ...bar]);
+    } catch (err) {
+      setError(err.message || "Failed to fetch data.");
+      toast.error("Failed to fetch data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchProducts = async () => {
+    try {
       // Fetch categories and find Food (Kitchen) and Bar
       const categoryData = await getCategories();
       const kitchenCategory = categoryData.find((cat) => cat.name.toLowerCase() === "food");
@@ -36,6 +71,12 @@ function OrderList() {
       }
 
       setCategories({ kitchen: kitchenCategory.id, bar: barCategory.id });
+      
+      // Store full categories data for filtering
+      setCategories(prevState => ({
+        ...prevState,
+        allCategories: categoryData
+      }));
 
       // Fetch products and filter by category
       const productData = await getProducts();
@@ -45,9 +86,7 @@ function OrderList() {
 
       setProducts(filteredProducts);
     } catch (err) {
-      setError(err.message || "Failed to fetch products.");
-    } finally {
-      setLoading(false);
+      throw new Error(err.message || "Failed to fetch products.");
     }
   };
 
@@ -56,7 +95,7 @@ function OrderList() {
       const tableData = await tableAPI.fetchTables();
       setTables(tableData);
     } catch (err) {
-      setError("Failed to fetch tables.");
+      throw new Error("Failed to fetch tables.");
     }
   };
 
@@ -120,7 +159,7 @@ function OrderList() {
           : product.category === categories.bar
       );
 
-  // Complete the order
+  // Complete the new order
   const completeOrder = async () => {
     if (orders.length === 0) {
       setError("No items in the order.");
@@ -143,14 +182,96 @@ function OrderList() {
       setOrders([]);
       setNewOrder({ product: "", quantity: 1, tableNumber: "", customerName: "" });
       setTimeout(() => setSuccess(""), 3000);
+      
+      // Refresh the order list
+      fetchData();
     } catch (err) {
       console.error("Failed to complete order:", err.response?.data || err.message);
       setError(err.response?.data?.error || "Failed to complete order.");
     }
   };
 
+  // Handle existing order completion
+  const markOrderComplete = async (id) => {
+    try {
+      await handleCompleteOrder(id);
+      toast.success("Order marked as completed!");
+      fetchData(); // Refresh data
+    } catch (err) {
+      toast.error("Failed to complete order.");
+    }
+  };
+
+  // Handle order cancellation
+  const cancelOrder = async (id) => {
+    try {
+      await handleCancelOrder(id);
+      toast.success("Order canceled successfully!");
+      fetchData(); // Refresh data
+    } catch (err) {
+      toast.error("Failed to cancel order.");
+    }
+  };
+
+  // Handle search input
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    filterOrders(query, filterCategory, filterProductType);
+  };
+
+  // Handle category filter change (kitchen, bar, or all)
+  const handleFilterChange = (e) => {
+    const category = e.target.value;
+    setFilterCategory(category);
+    filterOrders(searchQuery, category, filterProductType);
+  };
+
+  // Handle product type filter change
+  const handleProductTypeChange = (e) => {
+    const productType = e.target.value;
+    setFilterProductType(productType);
+    filterOrders(searchQuery, filterCategory, productType);
+  };
+
+  // Filter orders based on search, category, and product type
+  const filterOrders = (query, category, productType) => {
+    let allOrders = [...kitchenOrders, ...barOrders];
+
+    // Filter by category (kitchen, bar, or all)
+    if (category === "kitchen") {
+      allOrders = kitchenOrders;
+    } else if (category === "bar") {
+      allOrders = barOrders;
+    }
+
+    // Filter by product type (kitchen products, bar products, or all)
+    if (productType !== "all") {
+      allOrders = allOrders.filter((order) => {
+        const product = products.find((p) => p.id === order.product_id);
+        return product?.category_id === productType;
+      });
+    }
+
+    // Search by product name, category, or table number
+    const filtered = allOrders.filter((order) => {
+      const product = products.find((p) => p.id === order.product_id);
+      const productName = product?.name?.toLowerCase() || "";
+      const productCategory = categories.allCategories?.find((c) => c.id === product?.category_id)?.name?.toLowerCase() || "";
+      const tableNumber = order.sale?.table_number?.toString() || "";
+
+      return (
+        productName.includes(query) ||
+        productCategory.includes(query) ||
+        tableNumber.includes(query)
+      );
+    });
+
+    setFilteredOrders(filtered);
+  };
+
   return (
-    <div className="bg-gray-50 rounded-lg">
+    <div className="bg-gray-50 rounded-lg p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800 flex items-center">
           <ShoppingCart className="mr-2" /> Restaurant Orders
@@ -177,7 +298,8 @@ function OrderList() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* NEW ORDER SECTION */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {/* Order Form Section */}
         <div className="lg:col-span-2">
           <div className="bg-white p-6 rounded-lg shadow-md mb-6">
@@ -381,6 +503,102 @@ function OrderList() {
           </div>
         </div>
       </div>
+
+      {/* EXISTING ORDERS SECTION */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Existing Orders</h3>
+        
+        {/* Search and Filters */}
+        <div className="flex flex-wrap gap-4 mb-6">
+          <input
+            type="text"
+            placeholder="Search by product, category, or table number"
+            value={searchQuery}
+            onChange={handleSearch}
+            className="flex-grow p-2 border rounded"
+          />
+          <select
+            value={filterCategory}
+            onChange={handleFilterChange}
+            className="p-2 border rounded"
+          >
+            <option value="all">All Orders</option>
+            <option value="kitchen">Kitchen Orders</option>
+            <option value="bar">Bar Orders</option>
+          </select>
+          <select
+            value={filterProductType}
+            onChange={handleProductTypeChange}
+            className="p-2 border rounded"
+          >
+            <option value="all">All Products</option>
+            <option value="kitchen">Kitchen Products</option>
+            <option value="bar">Bar Products</option>
+          </select>
+        </div>
+
+        {/* Loading State */}
+        {loading && <p className="text-gray-600">Loading orders...</p>}
+
+        {/* Order List */}
+        {!loading && (
+          <>
+            {filteredOrders.length > 0 ? (
+              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredOrders.map((order) => {
+                  const product = products.find((p) => p.id === order.product_id);
+                  const productCategory = categories.allCategories?.find((c) => c.id === product?.category_id)?.name || "N/A";
+
+                  return (
+                    <li key={order.id} className="border rounded p-4 hover:shadow-md transition-shadow">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-medium">{product?.name || "N/A"}</h4>
+                          <span className={`inline-block px-2 py-1 text-xs rounded ${order.routed_to === "kitchen" ? "bg-orange-100 text-orange-800" : "bg-blue-100 text-blue-800"} mt-1`}>
+                            {order.routed_to === "kitchen" ? "Kitchen" : "Bar"}
+                          </span>
+                        </div>
+                        <span className="bg-gray-200 px-2 py-1 rounded text-sm">
+                          Qty: {order.quantity}
+                        </span>
+                      </div>
+                      
+                      <div className="mt-2 text-sm text-gray-600">
+                        <p>Category: {productCategory}</p>
+                        <p>Table: {order.sale?.table_number || "N/A"}</p>
+                        <p>Customer: {order.sale?.customer_name || "N/A"}</p>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="mt-4 flex space-x-2">
+                        <button
+                          onClick={() => markOrderComplete(order.id)}
+                          className="flex-1 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
+                        >
+                          <Check className="w-4 h-4 mr-1" /> Complete
+                        </button>
+                        <button
+                          onClick={() => cancelOrder(order.id)}
+                          className="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
+                        >
+                          <X className="w-4 h-4 mr-1" /> Cancel
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <p>No orders found matching your criteria.</p>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Toast Notifications */}
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 }
