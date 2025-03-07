@@ -216,7 +216,7 @@ export const saleAPI = {
     return response.data;
   },
   fetchSales: async () => {
-    const response = await api.get('/sale/sales/');
+    const response = await api.get('/sale/sales');
     return response.data;
   },
   fetchSaleById: async (id) => {
@@ -233,16 +233,26 @@ export const saleAPI = {
   },
 };
 
-export const orderAPI = {
-  fetchKitchenOrders: async () => {
+export const fetchKitchenOrders = async () => {
+  try {
     const response = await api.get('/table/kitchen-orders/');
     return response.data;
-  },
-  fetchBarOrders: async () => {
+  } catch (error) {
+    console.error('Failed to fetch kitchen orders:', error);
+    throw error;
+  }
+};
+
+export const fetchBarOrders = async () => {
+  try {
     const response = await api.get('/table/bar-orders/');
     return response.data;
-  },
+  } catch (error) {
+    console.error('Failed to fetch bar orders:', error);
+    throw error;
+  }
 };
+
 
 export const invoiceAPI = {
   generateInvoice: async (tableId) => {
@@ -254,6 +264,37 @@ export const invoiceAPI = {
     return response.data;
   },
 };
+
+export const handleCompleteOrder = async (id, fetchOrders) => {
+  try {
+    await orderAPI.completeOrder(id);
+    fetchOrders(); // Refresh the order list
+  } catch (err) {
+    alert("Failed to complete order.");
+  }
+};
+
+// 🟠 Cancel an order
+export const handleCancelOrder = async (id, fetchOrders) => {
+  try {
+    await orderAPI.cancelOrder(id);
+    fetchOrders(); // Refresh the order list
+  } catch (err) {
+    alert("Failed to cancel order.");
+  }
+};
+
+// 🟡 Generate an invoice
+export const handleGenerateInvoice = async (tableId, setInvoice, setError) => {
+  try {
+    const data = await invoiceAPI.generateInvoice(tableId);
+    setInvoice(data);
+  } catch (err) {
+    setError(err.response?.data?.error || "Failed to generate invoice.");
+  }
+};
+
+
 // END OF RESTAURANT FUNCTIONS
 export const getUsers = async () => {
   const response = await api.get("/users/users");

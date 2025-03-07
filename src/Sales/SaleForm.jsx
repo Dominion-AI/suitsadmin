@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { 
@@ -191,8 +192,9 @@ const SaleForm = ({ onSaleCreated }) => {
                 <option value="">Select Product</option>
                 {products.map((product) => (
                   <option key={product.id} value={product.id}>
-                    {product.name} - ${product.price.toFixed(2)}
-                  </option>
+                  {product.name} - ${Number(product.price).toFixed(2)}
+                </option>
+                
                 ))}
               </select>
               <input
