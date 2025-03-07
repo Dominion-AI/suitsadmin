@@ -14,8 +14,6 @@ import LowStockAlert from "./Inventory/LowStockAlert";
 import Inventory from "./Inventory/Inventory";
 import SaleManager from './Sales/SaleManager';
 import Restaurant from './Restaurant/Restaurant';
-
-
 // import SalesReport from './Orders/SalesReport';
 // import Table from "./Table/Table";
 

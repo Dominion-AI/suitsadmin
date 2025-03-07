@@ -274,7 +274,7 @@ export const invoiceAPI = {
     return response.data;
   },
 };
-
+// END OF RESTAURANT FUNCTIONS
 export const handleCompleteOrder = async (id, fetchOrders) => {
   try {
     await orderAPI.completeOrder(id);
