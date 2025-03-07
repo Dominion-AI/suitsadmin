@@ -233,6 +233,16 @@ export const saleAPI = {
   },
 };
 
+export const getBillSplits = async (saleId) => {
+  const response = await api.get(`/table/sales/${saleId}/bill-splits/`);
+  return response.data;
+};
+
+
+export const splitBill = async (saleId, splitData) => {
+  const response = await api.post(`table/sales/${saleId}/split-bill/`, splitData);
+  return response.data;
+};
 export const fetchKitchenOrders = async () => {
   try {
     const response = await api.get('/table/kitchen-orders/');
