@@ -26,11 +26,11 @@ const Dashboard = () => {
   // Navigation card data
   const navCards = useMemo(() => [
     {
-      title: "Dashboard Overview",
-      description: "View key metrics and system status at a glance",
+      title: "Security Log",
+      description: "Handle security measures by the Admin",
       icon: <LayoutDashboard className="h-6 w-6 text-white" />,
-      path: "/dashboard",
-      color: "from-slate-700 to-slate-600"
+      path: "/security",
+      color: "from-red-700 to-red-600"
     },
     {
       title: "Inventory Management",
@@ -64,7 +64,7 @@ const Dashboard = () => {
       title: "Reports & Analytics",
       description: "Generate and view business performance reports",
       icon: <BarChart3 className="h-6 w-6 text-white" />,
-      path: "/report",
+      path: "/sales-report",
       color: "from-blue-700 to-blue-600"
     }
   ], []);

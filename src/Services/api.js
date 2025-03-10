@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ApertureIcon } from 'lucide-react';
 
 const BASE_URL = 'https://suitsadmin.onrender.com/api';
 
@@ -266,23 +267,25 @@ export const fetchBarOrders = async () => {
 
 export const invoiceAPI = {
   generateInvoice: async (tableId) => {
+    console.log("Table ID:", tableId); // Add this to check the ID
     const response = await api.get(`/table/tables/${tableId}/generate-invoice/`);
-    return response.data;
-  },
-  fetchInvoiceById: async (invoiceId) => {
-    const response = await api.get(`/table/invoices/${invoiceId}/`);
     return response.data;
   },
 };
 
-export const handleCompleteOrder = async (id, fetchOrders) => {
+
+// api.js
+// Mark a sale as completed
+export const handleCompleteOrder = async (saleId) => {
   try {
-    await orderAPI.completeOrder(id);
-    fetchOrders(); // Refresh the order list
+    const response = await api.patch(`/sales/${saleId}/complete/`);
+    return response.data;
   } catch (err) {
-    alert("Failed to complete order.");
+    console.error("Failed to complete order:", err.response?.data || err.message);
+    throw err;
   }
 };
+
 
 // 🟠 Cancel an order
 export const handleCancelOrder = async (id, fetchOrders) => {
@@ -313,6 +316,91 @@ export const handleGenerateInvoice = async (tableId, setInvoice, setError) => {
 
 
 // END OF RESTAURANT FUNCTIONS
+
+// Security log functions
+
+//Fetch logs with optional filters
+export const fetchLogs = async (eventType = '', date = '') => {
+    try {
+        const response = await api.get(`/logs/logs/`, {
+            params: { event_type: eventType, date },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch logs:', error);
+        throw error;
+    }
+};
+
+export const createLog = async (eventType, message) => {
+  try {
+      const response = await api.post(`/logs/log-event/`, {
+          event_type: eventType,
+          message,
+      });
+      return response.data;
+  } catch (error) {
+      console.error('Failed to create log:', error);
+      throw error;
+  }
+};
+
+// Sales Reporting and Analysis.
+export const exportReportToPDF = async (startDate, endDate) => {
+  try {
+      const params = {};
+      if (startDate) params.start_date = startDate;
+      if (endDate) params.end_date = endDate;
+
+      console.log("Exporting report with params:", params); // Log request params
+
+      const response = await api.get(`/sale/sales-reports/export-pdf/`, {
+          params,
+          responseType: "blob", // Important for handling binary data (PDF)
+      });
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+
+      // Trigger file download
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "sales_report.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+  } catch (error) {
+      console.error("Error exporting PDF:", error);
+      throw error;
+  }
+};
+
+export const fetchMonthlySalesReport = async (startDate, endDate) => {
+  console.log("Fetching sales report with dates:", startDate, endDate);
+
+  try {
+      const params = {};
+      if (startDate) params.start_date = startDate;
+      if (endDate) params.end_date = endDate;
+
+      // Use the correct API instance
+      const response = await api.get(`/sale/sales-reports/monthly/`, { params });
+
+      console.log("Full API response:", response);
+      return response.data;
+  } catch (error) {
+      console.error("Error fetching monthly sales report:", error);
+      throw error;
+  }
+};
+
+
+
+
+// end of sales reporting and analysis.
+
+
+// end of Security log functions
 export const getUsers = async () => {
   const response = await api.get("/users/users");
   return response.data;

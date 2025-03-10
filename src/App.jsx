@@ -14,8 +14,8 @@ import LowStockAlert from "./Inventory/LowStockAlert";
 import Inventory from "./Inventory/Inventory";
 import SaleManager from './Sales/SaleManager';
 import Restaurant from './Restaurant/Restaurant';
-// import SalesReport from './Orders/SalesReport';
-// import Table from "./Table/Table";
+import SecurityLogViewer from './Security/SecurityLogViewer'
+import SalesReportViewer from './SalesReport/SalesReportViewer';
 
 const App = () => {
   return (
@@ -41,6 +41,9 @@ const App = () => {
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/sales" element={<SaleManager />} />
           <Route path="/Restaurant" element={<Restaurant />} />
+          <Route path="/security" element={<SecurityLogViewer />} />
+          <Route path="/sales-report" element={<SalesReportViewer />} />          
+
 
           {/* <Route path="/sales/:id" element={<SaleDetails />} /> */}
           <Route path="/products" element={<Products />} />
