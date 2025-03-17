@@ -3,7 +3,7 @@ import { fetchMonthlySalesReport, getProducts, getCategories, getUsers } from ".
 import ReportFilter from "./ReportFilter";
 import SalesSummary from "./SalesSummary";
 import SalesChart from "./SalesChart";
-// import ExportReportButton from "./ExportReportButton";
+import ExportReportButton from "./ExportReportButton";
 
 function SalesReportViewer() {
     const [reportData, setReportData] = useState(null);
@@ -78,13 +78,13 @@ function SalesReportViewer() {
                                 Comprehensive analysis of your sales metrics and KPIs
                             </p>
                         </div>
-                        {/* <ExportReportButton
+                        <ExportReportButton
                             startDate={filters.startDate}
                             endDate={filters.endDate}
                             salesData={salesDataForExport}
                             chartRefs={{ statusChartRef, trendChartRef, productChartRef }}
                             disabled={!reportData || loading}
-                        /> */}
+                        />
                     </div>
 
                     {/* Report Filters */}

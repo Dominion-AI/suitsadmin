@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 function SaleSummary({ reportData, products, categories, users }) {
     if (!reportData || !products || !categories || !users) {
         return (
-            <div className="p-8 bg-gray-50 rounded-lg text-center">
+            <div className="p-8 bg-gray-50 rounded-lg text-center shadow-sm">
                 <div className="flex flex-col items-center">
-                    <div className="h-6 w-32 bg-gray-300 rounded mb-4"></div>
-                    <div className="h-24 w-full max-w-md bg-gray-200 rounded-lg"></div>
+                    <div className="h-6 w-32 bg-gray-300 rounded animate-pulse mb-4"></div>
+                    <div className="h-24 w-full max-w-md bg-gray-200 rounded-lg animate-pulse"></div>
                 </div>
                 <p className="mt-4 text-gray-500">Loading sales data...</p>
             </div>
@@ -78,24 +78,24 @@ function SaleSummary({ reportData, products, categories, users }) {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6">
-                <h2 className="text-3xl font-bold mb-2">Sales Dashboard</h2>
-                <p className="opacity-80">Comprehensive overview of your business performance</p>
+        <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6">
+                <h2 className="text-2xl font-bold mb-1">Sales Dashboard</h2>
+                <p className="text-blue-100 text-sm">Comprehensive overview of your business performance</p>
             </div>
             
-            <div className="p-6">
+            <div className="p-4 md:p-6">
                 {/* Summary Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                     <SummaryCard 
                         title="Total Sales" 
                         value={total_sales.toLocaleString()} 
                         iconType="shopping-bag"
                         color="blue"
-                        subtext="Product units sold" 
+                        subtext="Units sold" 
                     />
                     <SummaryCard 
-                        title="Total Revenue" 
+                        title="Revenue" 
                         value={`$${total_revenue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`} 
                         iconType="trending-up"
                         color="green" 
@@ -106,49 +106,49 @@ function SaleSummary({ reportData, products, categories, users }) {
                         value={categories.length} 
                         iconType="folder"
                         color="purple"
-                        subtext="Product categories" 
+                        subtext="Product groups" 
                     />
                     <SummaryCard 
                         title="Users" 
                         value={users.length} 
                         iconType="users"
                         color="orange"
-                        subtext="Active system users" 
+                        subtext="Active users" 
                     />
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
                     {/* Best Selling Product */}
                     {bestSellingProduct && (
                         <div className="lg:col-span-1">
-                            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <h3 className="text-lg font-semibold text-gray-700 mb-3 flex items-center">
                                 <svg className="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                                 </svg>
                                 Top Performer
                             </h3>
-                            <div className="bg-gradient-to-br from-yellow-50 to-amber-50 p-6 rounded-xl shadow-sm border border-yellow-100">
+                            <div className="bg-yellow-50 p-5 rounded-lg shadow-sm border border-yellow-100">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h4 className="text-xl font-bold text-gray-800">{bestSellingProduct.name}</h4>
-                                        <p className="text-gray-600 text-sm">{bestSellingProduct.category_name || 'Uncategorized'}</p>
+                                        <h4 className="text-lg font-semibold text-gray-800">{bestSellingProduct.name}</h4>
+                                        <p className="text-gray-500 text-sm">{bestSellingProduct.category_name || 'Uncategorized'}</p>
                                     </div>
-                                    <div className="bg-yellow-400 text-white p-2 rounded-full">
+                                    <div className="bg-yellow-400 text-white p-2 rounded-lg">
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                                         </svg>
                                     </div>
                                 </div>
                                 
-                                <div className="mt-4 space-y-3">
+                                <div className="mt-4 space-y-4">
                                     <div>
                                         <div className="flex justify-between text-sm mb-1">
                                             <span className="font-medium">Sales</span>
                                             <span className="font-bold">{bestSellingProduct.total_sales.toLocaleString()} units</span>
                                         </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                                             <div 
-                                                className="bg-yellow-400 h-2 rounded-full" 
+                                                className="bg-yellow-400 h-2 rounded-full transition-all duration-500" 
                                                 style={{ width: getPercentage(bestSellingProduct.total_sales, total_sales) }}
                                             ></div>
                                         </div>
@@ -159,9 +159,9 @@ function SaleSummary({ reportData, products, categories, users }) {
                                             <span className="font-medium">Revenue</span>
                                             <span className="font-bold">${bestSellingProduct.total_revenue?.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                                         </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                                             <div 
-                                                className="bg-green-500 h-2 rounded-full" 
+                                                className="bg-green-400 h-2 rounded-full transition-all duration-500" 
                                                 style={{ width: getPercentage(bestSellingProduct.total_revenue, total_revenue) }}
                                             ></div>
                                         </div>
@@ -173,15 +173,15 @@ function SaleSummary({ reportData, products, categories, users }) {
 
                     {/* Currency Breakdown */}
                     <div className="lg:col-span-2">
-                        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <h3 className="text-lg font-semibold text-gray-700 mb-3 flex items-center">
                             <svg className="w-5 h-5 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                             </svg>
                             Revenue by Currency
                         </h3>
-                        <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-xl shadow-sm border border-purple-100">
+                        <div className="bg-purple-50 p-5 rounded-lg shadow-sm border border-purple-100">
                             {revenue_by_currency.length > 0 ? (
-                                <div className="space-y-4">
+                                <div className="space-y-3">
                                     {revenue_by_currency.map((item, index) => {
                                         const percentage = (parseFloat(item.total_revenue) / total_revenue) * 100;
                                         return (
@@ -192,9 +192,9 @@ function SaleSummary({ reportData, products, categories, users }) {
                                                         ${parseFloat(item.total_revenue).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                                     </span>
                                                 </div>
-                                                <div className="w-full bg-gray-200 rounded-full h-3">
+                                                <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
                                                     <div 
-                                                        className="bg-purple-500 h-3 rounded-full" 
+                                                        className="bg-purple-500 h-2.5 rounded-full transition-all duration-500" 
                                                         style={{ width: `${percentage}%` }}
                                                     ></div>
                                                 </div>
@@ -214,16 +214,16 @@ function SaleSummary({ reportData, products, categories, users }) {
                 </div>
 
                 {/* Category Breakdown with Visual Bars */}
-                <div className="mb-8">
-                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <div className="mb-6">
+                    <h3 className="text-lg font-semibold text-gray-700 mb-3 flex items-center">
                         <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
                         Products by Category
                     </h3>
-                    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-xl shadow-sm border border-blue-100">
+                    <div className="bg-blue-50 p-5 rounded-lg shadow-sm border border-blue-100">
                         {/* Simple bar chart visualization */}
-                        <div className="space-y-4 mb-6">
+                        <div className="space-y-3 mb-5">
                             {categoryProductCounts.map((category, index) => {
                                 const maxCount = Math.max(...categoryProductCounts.map(c => c.count));
                                 const percentage = (category.count / maxCount) * 100;
@@ -233,9 +233,9 @@ function SaleSummary({ reportData, products, categories, users }) {
                                             <span className="font-medium text-gray-700">{category.name}</span>
                                             <span className="font-bold text-gray-800">{category.count}</span>
                                         </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-6">
+                                        <div className="w-full bg-gray-200 rounded-full h-5 overflow-hidden">
                                             <div 
-                                                className="bg-blue-500 rounded-full h-6 flex items-center"
+                                                className="bg-blue-500 rounded-full h-5 flex items-center transition-all duration-500"
                                                 style={{ width: `${percentage}%` }}
                                             >
                                                 {percentage > 25 && (
@@ -250,14 +250,14 @@ function SaleSummary({ reportData, products, categories, users }) {
                             })}
                         </div>
                         
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5">
                             {categoryProductCounts.map((category, index) => (
-                                <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
+                                <div key={index} className="bg-white p-3 rounded-lg shadow-sm">
                                     <p className="text-gray-600 font-medium">{category.name}</p>
-                                    <p className="text-2xl font-bold text-gray-800">{category.count}</p>
-                                    <div className="w-full bg-gray-200 rounded-full h-1 mt-2">
+                                    <p className="text-xl font-bold text-gray-800">{category.count}</p>
+                                    <div className="w-full bg-gray-200 rounded-full h-1 mt-2 overflow-hidden">
                                         <div 
-                                            className="bg-blue-500 h-1 rounded-full" 
+                                            className="bg-blue-500 h-1 rounded-full transition-all duration-500" 
                                             style={{ width: getPercentage(category.count, Math.max(...categoryProductCounts.map(c => c.count))) }}
                                         ></div>
                                     </div>
@@ -269,13 +269,13 @@ function SaleSummary({ reportData, products, categories, users }) {
 
                 {/* User Role Breakdown */}
                 <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <h3 className="text-lg font-semibold text-gray-700 mb-3 flex items-center">
                         <svg className="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
                         Users by Role
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {Object.entries(userRoleCounts).map(([role, count], index) => {
                             const colors = {
                                 admin: 'bg-red-500',
@@ -306,23 +306,23 @@ function SaleSummary({ reportData, products, categories, users }) {
                             }
                             
                             return (
-                                <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                    <div className="flex items-center mb-4">
-                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white ${colors[role] || 'bg-gray-500'}`}>
+                                <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+                                    <div className="flex items-center mb-3">
+                                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white ${colors[role] || 'bg-gray-500'}`}>
                                             {roleIcon}
                                         </div>
-                                        <div className="ml-4">
-                                            <p className="text-gray-800 font-bold text-xl">{role.charAt(0).toUpperCase() + role.slice(1)}</p>
-                                            <p className="text-gray-500">User role</p>
+                                        <div className="ml-3">
+                                            <p className="text-gray-800 font-semibold">{role.charAt(0).toUpperCase() + role.slice(1)}</p>
+                                            <p className="text-gray-500 text-xs">User role</p>
                                         </div>
                                     </div>
                                     <div className="flex items-end">
-                                        <span className="text-3xl font-bold">{count}</span>
-                                        <span className="text-gray-500 ml-2 mb-1">users</span>
+                                        <span className="text-2xl font-bold">{count}</span>
+                                        <span className="text-gray-500 ml-2 mb-0.5 text-sm">users</span>
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-1 mt-4">
+                                    <div className="w-full bg-gray-200 rounded-full h-1.5 mt-3 overflow-hidden">
                                         <div 
-                                            className={`${colors[role] || 'bg-gray-500'} h-1 rounded-full`} 
+                                            className={`${colors[role] || 'bg-gray-500'} h-1.5 rounded-full transition-all duration-500`} 
                                             style={{ width: getPercentage(count, users.length) }}
                                         ></div>
                                     </div>
@@ -339,12 +339,14 @@ function SaleSummary({ reportData, products, categories, users }) {
 
 // Enhanced Summary card component with custom SVG icons
 const SummaryCard = ({ title, value, iconType, color, subtext }) => {
-    const bgColors = {
-        blue: 'from-blue-500 to-blue-600',
-        green: 'from-green-500 to-green-600',
-        purple: 'from-purple-500 to-purple-600',
-        orange: 'from-orange-500 to-orange-600'
+    const cardColors = {
+        blue: { bg: 'bg-blue-500', shadow: 'shadow-blue-100' },
+        green: { bg: 'bg-green-500', shadow: 'shadow-green-100' },
+        purple: { bg: 'bg-purple-500', shadow: 'shadow-purple-100' },
+        orange: { bg: 'bg-orange-500', shadow: 'shadow-orange-100' }
     };
+    
+    const selectedColor = cardColors[color] || { bg: 'bg-gray-500', shadow: 'shadow-gray-100' };
     
     // Select appropriate icon based on type
     let icon;
@@ -386,14 +388,14 @@ const SummaryCard = ({ title, value, iconType, color, subtext }) => {
     }
     
     return (
-        <div className={`bg-gradient-to-r ${bgColors[color] || 'from-gray-500 to-gray-600'} rounded-xl p-6 text-white shadow-lg`}>
+        <div className={`${selectedColor.bg} rounded-lg p-4 text-white shadow-md hover:shadow-lg transition-all duration-300`}>
             <div className="flex items-center justify-between">
                 <div>
-                    <p className="font-medium opacity-80">{title}</p>
-                    <h3 className="text-3xl font-bold mt-1">{value}</h3>
-                    {subtext && <p className="text-sm opacity-80 mt-1">{subtext}</p>}
+                    <p className="font-medium text-sm opacity-90">{title}</p>
+                    <h3 className="text-2xl font-bold mt-1">{value}</h3>
+                    {subtext && <p className="text-xs opacity-80 mt-1">{subtext}</p>}
                 </div>
-                <div className="bg-white bg-opacity-20 p-3 rounded-lg">
+                <div className="bg-white bg-opacity-25 p-2 rounded-lg">
                     {icon}
                 </div>
             </div>
@@ -406,10 +408,10 @@ SaleSummary.propTypes = {
         total_sales: PropTypes.number,
         total_revenue: PropTypes.number,
         revenue_by_currency: PropTypes.array,
-    }).isRequired,
-    products: PropTypes.array.isRequired,
-    categories: PropTypes.array.isRequired,
-    users: PropTypes.array.isRequired,
+    }),
+    products: PropTypes.array,
+    categories: PropTypes.array,
+    users: PropTypes.array,
 };
 
 export default SaleSummary;

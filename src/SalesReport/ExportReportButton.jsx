@@ -2,17 +2,16 @@ import { useState } from "react";
 import React from "react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-autoTable(jsPDF);
 
 /**
  * Export report as a PDF with charts and detailed data.
  */
 function ExportReportButton({ 
-    startDate, 
-    endDate, 
-    salesData, 
-    chartRefs, 
-    disabled 
+    startDate = "N/A", 
+    endDate = "N/A", 
+    salesData = {}, 
+    chartRefs = {}, 
+    disabled = false
 }) {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(null);
@@ -22,6 +21,15 @@ function ExportReportButton({
         trends: true,
         products: true,
     });
+
+    /**
+     * Safely format numbers with toLocaleString
+     */
+    const safeFormat = (value) => {
+        if (value === undefined || value === null) return "N/A";
+        if (typeof value === 'number') return value.toLocaleString();
+        return value.toString();
+    };
 
     /**
      * Capture chart image as Base64
@@ -58,17 +66,6 @@ function ExportReportButton({
             // Create a new jsPDF instance
             const doc = new jsPDF("p", "mm", "a4");
             
-            // Explicitly add autoTable to doc if it doesn't exist
-            if (typeof doc.autoTable !== 'function') {
-                // Import jspdf-autotable dynamically to ensure it's fully loaded
-                await import("jspdf-autotable").then(() => {
-                    // The import should add autoTable to the jsPDF prototype
-                    if (typeof doc.autoTable !== 'function') {
-                        throw new Error("jspdf-autotable not properly loaded");
-                    }
-                });
-            }
-            
             const fileName = `Sales_Report_${startDate}_to_${endDate}.pdf`;
 
             let yPosition = 20;
@@ -97,13 +94,13 @@ function ExportReportButton({
                 doc.text("Key Performance Indicators (KPIs)", 14, yPosition);
                 yPosition += 10;
 
-                doc.autoTable({
+                autoTable(doc, {
                     startY: yPosition,
                     head: [["Metric", "Value"]],
                     body: [
-                        ["Total Sales", salesData.totalSales],
-                        ["Total Revenue", `$${salesData.totalRevenue.toLocaleString()}`],
-                        ["Avg Sale Value", `$${salesData.avgSaleValue.toLocaleString()}`],
+                        ["Total Sales", salesData.totalSales || 0],
+                        ["Total Revenue", `$${safeFormat(salesData.totalRevenue || 0)}`],
+                        ["Avg Sale Value", `$${safeFormat(salesData.avgSaleValue || 0)}`],
                     ],
                 });
 
@@ -111,7 +108,7 @@ function ExportReportButton({
             }
 
             /** SALES STATUS SECTION **/
-            if (selectedSections.status && salesData.statusData.length > 0) {
+            if (selectedSections.status && Array.isArray(salesData.statusData) && salesData.statusData.length > 0) {
                 doc.setFontSize(16);
                 doc.text("Sales Status Breakdown", 14, yPosition);
                 yPosition += 10;
@@ -122,22 +119,22 @@ function ExportReportButton({
                     yPosition += 100;
                 }
 
-                doc.autoTable({
+                autoTable(doc, {
                     startY: yPosition,
                     head: [["Status", "Count", "Total Revenue"]],
                     body: salesData.statusData.map((item) => [
-                        item.status,
-                        item.count,
-                        `$${item.totalAmount.toLocaleString()}`,
+                        item.status || "Unknown",
+                        item.count || 0,
+                        `$${safeFormat(item.totalAmount || 0)}`,
                     ]),
-                    foot: [["Total", salesData.totalSales, `$${salesData.totalRevenue.toLocaleString()}`]],
+                    foot: [["Total", salesData.totalSales || 0, `$${safeFormat(salesData.totalRevenue || 0)}`]],
                 });
 
                 yPosition = doc.lastAutoTable.finalY + 10;
             }
 
             /** SALES TRENDS SECTION **/
-            if (selectedSections.trends && salesData.trendData.length > 0) {
+            if (selectedSections.trends && Array.isArray(salesData.trendData) && salesData.trendData.length > 0) {
                 // Check if we need to add a new page based on remaining space
                 if (yPosition > 180) {
                     doc.addPage();
@@ -154,13 +151,13 @@ function ExportReportButton({
                     yPosition += 100;
                 }
 
-                doc.autoTable({
+                autoTable(doc, {
                     startY: yPosition,
                     head: [["Date", "Sales Count", "Total Revenue"]],
                     body: salesData.trendData.map((item) => [
-                        item.date,
-                        item.count,
-                        `$${item.totalAmount.toLocaleString()}`,
+                        item.date || "Unknown",
+                        item.count || 0,
+                        `$${safeFormat(item.totalAmount || 0)}`,
                     ]),
                 });
 
@@ -168,7 +165,7 @@ function ExportReportButton({
             }
 
             /** TOP PRODUCTS SECTION **/
-            if (selectedSections.products && salesData.topProducts.length > 0) {
+            if (selectedSections.products && Array.isArray(salesData.topProducts) && salesData.topProducts.length > 0) {
                 // Check if we need to add a new page based on remaining space
                 if (yPosition > 180) {
                     doc.addPage();
@@ -185,13 +182,13 @@ function ExportReportButton({
                     yPosition += 100;
                 }
 
-                doc.autoTable({
+                autoTable(doc, {
                     startY: yPosition,
                     head: [["Product", "Quantity Sold", "Total Revenue"]],
                     body: salesData.topProducts.map((item) => [
-                        item.product,
-                        item.quantity,
-                        `$${item.totalAmount.toLocaleString()}`,
+                        item.product || "Unknown",
+                        item.quantity || 0,
+                        `$${safeFormat(item.totalAmount || 0)}`,
                     ]),
                 });
             }

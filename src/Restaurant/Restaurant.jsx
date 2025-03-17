@@ -17,10 +17,10 @@ function Restaurant() {
         return <TableList />;
       case "orders":
         return <OrderList />;
-      case "bills":
-        return <BillSplit />;
-      case "invoice":
-        return <InvoiceGenerator />;
+      // case "bills":
+      //   return <BillSplit />;
+      // case "invoice":
+      //   return <InvoiceGenerator />;
       default:
         return <TableList />;
     }
@@ -31,8 +31,8 @@ function Restaurant() {
     { id: "reservations", label: "Reservations", icon: <Calendar className="w-5 h-5 mr-2" /> },
     { id: "table", label: "Tables", icon: <Users className="w-5 h-5 mr-2" /> },
     { id: "orders", label: "Orders", icon: <ShoppingCart className="w-5 h-5 mr-2" /> },
-    { id: "bills", label: "Split Bills", icon: <Receipt className="w-5 h-5 mr-2" /> },
-    { id: "invoice", label: "Invoice", icon: <FileText className="w-5 h-5 mr-2" /> },
+    // { id: "bills", label: "Split Bills", icon: <Receipt className="w-5 h-5 mr-2" /> },
+    // { id: "invoice", label: "Invoice", icon: <FileText className="w-5 h-5 mr-2" /> },
   ];
 
   return (

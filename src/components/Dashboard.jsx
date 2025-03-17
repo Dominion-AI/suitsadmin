@@ -18,7 +18,6 @@ const Dashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleString());
   const navigate = useNavigate();
   const location = useLocation();
-  const [info, setInfo] = useState({ username: '', role: '' });
   const [error, setError] = useState("");
   const currentPath = location.pathname;
   const isDashboardHome = currentPath === "/dashboard";
@@ -83,39 +82,7 @@ const Dashboard = () => {
   }, []);
 
   // Fetch user details
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        const token = localStorage.getItem("access_token");
   
-        if (!token) {
-          throw new Error("No access token found. Please log in.");
-        }
-  
-        const response = await api.get("/users/users/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-  
-        if (response.data && response.data.username && response.data.role) {
-          setInfo(response.data);
-        } else {
-          throw new Error("Invalid user data format");
-        }
-      } catch (error) {
-        if (error.response?.status === 403) {
-          setError("You do not have permission to access this resource.");
-        } else if (error.response?.status === 401) {
-          setError("Session expired. Please log in again.");
-          localStorage.clear();
-          navigate("/login");
-        } else { 
-          setError(error.response?.data?.message || "Failed to fetch user details");
-        }
-      }
-    };
-  
-    fetchUserDetails();
-  }, [navigate]);
   
   // Logout function
   const handleLogout = () => {
@@ -130,7 +97,7 @@ const Dashboard = () => {
   const CardNavigation = () => (
     <div className="mb-8">
       <h1 className="text-xl font-bold text-slate-800 mb-2">
-        Welcome, {info.username || 'User'}
+        Welcome, User
       </h1>
       <p className="text-slate-500 text-sm mb-8">Select a module to get started</p>
       
@@ -212,17 +179,6 @@ const Dashboard = () => {
               </div>
 
               {/* User Profile Section */}
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 shadow-sm">
-                <div className="p-1 bg-slate-200 rounded-full">
-                  <User className="h-4 w-4 text-slate-700" />
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-slate-800">{info.username || 'User'}</p>
-                  <p className="text-xs font-medium text-slate-500">
-                    {info.role || 'Loading...'}
-                  </p>
-                </div>
-              </div>
 
               {/* Logout Button */}
               <button
